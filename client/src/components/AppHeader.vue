@@ -39,10 +39,24 @@
         <!-- Right side -->
         <div class="flex items-center space-x-4">
           <!-- Connection Status -->
+<<<<<<< HEAD
           <ConnectionStatus />
 
           <!-- Notifications -->
           <NotificationCenter />
+=======
+          <div class="flex items-center space-x-2">
+            <div
+              :class="[
+                'w-2 h-2 rounded-full',
+                connectionStatus ? 'bg-green-500' : 'bg-red-500'
+              ]"
+            ></div>
+            <span class="text-sm text-gray-600 dark:text-gray-300">
+              {{ connectionStatus ? 'Connected' : 'Disconnected' }}
+            </span>
+          </div>
+>>>>>>> feature/project-setup
 
           <!-- Theme Toggle -->
           <button
@@ -102,12 +116,19 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { SunIcon, MoonIcon, Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
+<<<<<<< HEAD
 import { useRealtimeStore } from '../stores/realtime.js'
 import ConnectionStatus from './ConnectionStatus.vue'
 import NotificationCenter from './NotificationCenter.vue'
 
 const realtimeStore = useRealtimeStore()
 const mobileMenuOpen = ref(false)
+=======
+import socketService from '../services/socketService.js'
+
+const mobileMenuOpen = ref(false)
+const connectionStatus = ref(false)
+>>>>>>> feature/project-setup
 const isDark = ref(false)
 
 // Theme management
@@ -136,6 +157,7 @@ const initTheme = () => {
   }
 }
 
+<<<<<<< HEAD
 onMounted(() => {
   initTheme()
   
@@ -147,5 +169,22 @@ onMounted(() => {
 
 onUnmounted(() => {
   realtimeStore.disconnect()
+=======
+// Check connection status
+const checkConnection = () => {
+  connectionStatus.value = socketService.getConnectionStatus()
+}
+
+onMounted(() => {
+  initTheme()
+  checkConnection()
+  
+  // Check connection status periodically
+  const connectionInterval = setInterval(checkConnection, 1000)
+  
+  onUnmounted(() => {
+    clearInterval(connectionInterval)
+  })
+>>>>>>> feature/project-setup
 })
 </script>

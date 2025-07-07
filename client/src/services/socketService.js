@@ -6,6 +6,7 @@ class SocketService {
   constructor() {
     this.socket = null
     this.isConnected = false
+<<<<<<< HEAD
     this.reconnectAttempts = 0
     this.maxReconnectAttempts = 5
     this.pingInterval = null
@@ -13,10 +14,16 @@ class SocketService {
   }
 
   connect(userId = null, userName = null) {
+=======
+  }
+
+  connect() {
+>>>>>>> feature/project-setup
     if (this.socket) {
       return this.socket
     }
 
+<<<<<<< HEAD
     console.log('Connecting to Socket.io server...')
     this.socket = io(SOCKET_URL, {
       transports: ['websocket', 'polling'],
@@ -24,11 +31,17 @@ class SocketService {
       reconnection: true,
       reconnectionDelay: 1000,
       reconnectionAttempts: this.maxReconnectAttempts,
+=======
+    this.socket = io(SOCKET_URL, {
+      transports: ['websocket', 'polling'],
+      timeout: 5000,
+>>>>>>> feature/project-setup
     })
 
     this.socket.on('connect', () => {
       console.log('Connected to server:', this.socket.id)
       this.isConnected = true
+<<<<<<< HEAD
       this.reconnectAttempts = 0
       this.startPing()
       
@@ -36,17 +49,23 @@ class SocketService {
       if (userId && userName) {
         this.socket.emit('user-connected', { userId, userName })
       }
+=======
+>>>>>>> feature/project-setup
     })
 
     this.socket.on('disconnect', (reason) => {
       console.log('Disconnected from server:', reason)
       this.isConnected = false
+<<<<<<< HEAD
       this.stopPing()
+=======
+>>>>>>> feature/project-setup
     })
 
     this.socket.on('connect_error', (error) => {
       console.error('Connection error:', error)
       this.isConnected = false
+<<<<<<< HEAD
       this.reconnectAttempts++
     })
 
@@ -69,13 +88,18 @@ class SocketService {
     // Handle pong responses
     this.socket.on('pong', (data) => {
       // Connection is healthy
+=======
+>>>>>>> feature/project-setup
     })
 
     return this.socket
   }
 
   disconnect() {
+<<<<<<< HEAD
     this.stopPing()
+=======
+>>>>>>> feature/project-setup
     if (this.socket) {
       this.socket.disconnect()
       this.socket = null
@@ -83,6 +107,7 @@ class SocketService {
     }
   }
 
+<<<<<<< HEAD
   // Ping/Pong for connection health monitoring
   startPing() {
     this.pingInterval = setInterval(() => {
@@ -217,6 +242,35 @@ class SocketService {
       this.socket.connect()
     }
   }
+=======
+  joinTeam(teamId) {
+    if (this.socket) {
+      this.socket.emit('join-team', teamId)
+    }
+  }
+
+  updateMember(teamId, memberData) {
+    if (this.socket) {
+      this.socket.emit('member-update', { teamId, ...memberData })
+    }
+  }
+
+  onMemberUpdate(callback) {
+    if (this.socket) {
+      this.socket.on('member-updated', callback)
+    }
+  }
+
+  offMemberUpdate() {
+    if (this.socket) {
+      this.socket.off('member-updated')
+    }
+  }
+
+  getConnectionStatus() {
+    return this.isConnected
+  }
+>>>>>>> feature/project-setup
 }
 
 export default new SocketService()

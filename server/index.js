@@ -29,6 +29,7 @@ app.use('/api/timezone', require('./routes/timezone'));
 app.use('/api/meetings', require('./routes/meetings'));
 
 // Socket.io connection handling
+<<<<<<< HEAD
 let connectedUsers = new Map();
 let teamRooms = new Map();
 
@@ -170,6 +171,22 @@ io.on('connection', (socket) => {
   // Handle ping/pong for connection health
   socket.on('ping', () => {
     socket.emit('pong', { timestamp: new Date().toISOString() });
+=======
+io.on('connection', (socket) => {
+  console.log('New client connected:', socket.id);
+
+  socket.on('join-team', (teamId) => {
+    socket.join(teamId);
+    console.log(`Client ${socket.id} joined team ${teamId}`);
+  });
+
+  socket.on('member-update', (data) => {
+    socket.to(data.teamId).emit('member-updated', data);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Client disconnected:', socket.id);
+>>>>>>> feature/project-setup
   });
 });
 
@@ -178,6 +195,7 @@ app.get('/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
+<<<<<<< HEAD
 // Real-time statistics endpoint
 app.get('/api/realtime/stats', (req, res) => {
   const stats = {
@@ -212,6 +230,8 @@ app.get('/api/realtime/team/:teamId/users', (req, res) => {
   });
 });
 
+=======
+>>>>>>> feature/project-setup
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);

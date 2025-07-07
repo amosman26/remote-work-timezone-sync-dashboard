@@ -1,12 +1,18 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { teamService } from '../services/teamService.js'
+<<<<<<< HEAD
 import { useRealtimeStore } from '../stores/realtime.js'
+=======
+>>>>>>> feature/project-setup
 import DashboardStats from '../components/DashboardStats.vue'
 import TeamMap from '../components/TeamMap.vue'
 import TimezoneClocks from '../components/TimezoneClocks.vue'
 
+<<<<<<< HEAD
 const realtimeStore = useRealtimeStore()
+=======
+>>>>>>> feature/project-setup
 const teams = ref([])
 const loading = ref(true)
 const error = ref(null)
@@ -16,11 +22,14 @@ const fetchTeams = async () => {
     loading.value = true
     error.value = null
     teams.value = await teamService.getAllTeams()
+<<<<<<< HEAD
     
     // Join the first team for real-time updates
     if (teams.value.length > 0) {
       realtimeStore.joinTeam(teams.value[0].id)
     }
+=======
+>>>>>>> feature/project-setup
   } catch (err) {
     error.value = 'Failed to load teams. Please check if the server is running.'
     console.error('Error fetching teams:', err)
