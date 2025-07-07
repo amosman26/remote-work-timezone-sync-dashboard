@@ -39,12 +39,6 @@
         <!-- Right side -->
         <div class="flex items-center space-x-4">
           <!-- Connection Status -->
-<<<<<<< HEAD
-          <ConnectionStatus />
-
-          <!-- Notifications -->
-          <NotificationCenter />
-=======
           <div class="flex items-center space-x-2">
             <div
               :class="[
@@ -56,7 +50,6 @@
               {{ connectionStatus ? 'Connected' : 'Disconnected' }}
             </span>
           </div>
->>>>>>> feature/project-setup
 
           <!-- Theme Toggle -->
           <button
@@ -116,19 +109,10 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { SunIcon, MoonIcon, Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
-<<<<<<< HEAD
-import { useRealtimeStore } from '../stores/realtime.js'
-import ConnectionStatus from './ConnectionStatus.vue'
-import NotificationCenter from './NotificationCenter.vue'
-
-const realtimeStore = useRealtimeStore()
-const mobileMenuOpen = ref(false)
-=======
 import socketService from '../services/socketService.js'
 
 const mobileMenuOpen = ref(false)
 const connectionStatus = ref(false)
->>>>>>> feature/project-setup
 const isDark = ref(false)
 
 // Theme management
@@ -157,19 +141,6 @@ const initTheme = () => {
   }
 }
 
-<<<<<<< HEAD
-onMounted(() => {
-  initTheme()
-  
-  // Connect to real-time services
-  const userId = 'user-' + Math.random().toString(36).substr(2, 9)
-  const userName = 'Current User'
-  realtimeStore.connect(userId, userName)
-})
-
-onUnmounted(() => {
-  realtimeStore.disconnect()
-=======
 // Check connection status
 const checkConnection = () => {
   connectionStatus.value = socketService.getConnectionStatus()
@@ -185,6 +156,5 @@ onMounted(() => {
   onUnmounted(() => {
     clearInterval(connectionInterval)
   })
->>>>>>> feature/project-setup
 })
 </script>
